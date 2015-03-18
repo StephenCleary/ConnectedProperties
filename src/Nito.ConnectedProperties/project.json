@@ -1,0 +1,22 @@
+{
+    "version": "4.0.0-alpha-1",
+    "authors": [ "Stephen Cleary" ],
+    "dependencies": {
+    },
+
+    "compilationOptions": {
+        "warningsAsErrors": true
+    },
+
+    "frameworks": {
+        "net45": { },
+        "aspnetcore50": {
+            "dependencies": {
+                "System.Runtime": "4.0.20-beta-22523",
+                "System.Dynamic.Runtime": "4.0.0.0-beta-22605",
+                "System.Collections.Concurrent": "4.0.10.0-beta-22605",
+                "System.Reflection.Extensions": "4.0.0.0-beta-22605"
+            }
+        }
+    }
+}
