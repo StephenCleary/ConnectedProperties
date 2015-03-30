@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Nito.ConnectedProperties;
 using Xunit;
-using Nito.AsyncEx.Testing;
 
 namespace UnitTests
 {
