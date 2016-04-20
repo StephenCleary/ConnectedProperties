@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22609.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC7CC3DD-D397-484C-80AD-D220DA2A26AA}"
 EndProject
@@ -12,11 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nito.ConnectedProperties", "src\Nito.ConnectedProperties\Nito.ConnectedProperties.kproj", "{3F0E4259-F805-4795-B346-77D0562CF2EE}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nito.ConnectedProperties", "src\Nito.ConnectedProperties\Nito.ConnectedProperties.xproj", "{3F0E4259-F805-4795-B346-77D0562CF2EE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CEC15DEC-A102-40C2-BC0B-35A15B7DF6F1}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "UnitTests", "test\UnitTests\UnitTests.kproj", "{7616540B-CB7D-49E1-8174-F130BC1879A1}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "UnitTests", "test\UnitTests\UnitTests.xproj", "{7616540B-CB7D-49E1-8174-F130BC1879A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
