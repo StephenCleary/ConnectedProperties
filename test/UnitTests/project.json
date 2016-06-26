@@ -1,6 +1,13 @@
 ﻿{
   "version": "1.0.0-*",
   "testRunner": "xunit",
+  "configurations": {
+    "DebugCI": {
+      "buildOptions": {
+        "define": [ "DEBUG", "TRACE", "CI" ]
+      }
+    }
+  },
   "dependencies": {
     "Nito.ConnectedProperties": "4.0.0-beta-*",
     "xunit": "2.1.0",

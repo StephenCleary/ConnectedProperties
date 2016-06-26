@@ -284,7 +284,9 @@ namespace UnitTests
         }
 
 #if DEBUG // TODO: Is there some way we can force these to work in Debug? Anonymous method wrappers?
+#if !CI
 #warning Skipping some unit tests due to DEBUG; build in Release to run all unit tests.
+#endif
 #else
         [Fact]
         public void Property_WhenCarrierIsAlive_IsNotCollected()
