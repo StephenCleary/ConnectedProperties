@@ -1,6 +1,6 @@
 version: '{build}'
 os: Visual Studio 2015
-configuration: Debug
+configuration: Release
 environment:
   COVERALLS_REPO_TOKEN:
     secure: aKioN0ffdE4bl8U2pyazFCwZeMIA7hcO8cFCRujFjhwJuvW93AOpPj5WPc+WxdF/
