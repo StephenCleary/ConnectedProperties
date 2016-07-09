@@ -1,9 +1,10 @@
 {
-  "version": "4.0.0-delta-2",
+  "version": "4.0.0-delta-3",
   "authors": [ "Stephen Cleary" ],
   "description": "Dynamically attached object properties.",
   "buildOptions": {
-    "warningsAsErrors": true
+    "warningsAsErrors": true,
+    "xmlDoc": true
   },
   "frameworks": {
     "netstandard1.1": {
