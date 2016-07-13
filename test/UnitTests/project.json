@@ -9,7 +9,7 @@
     }
   },
   "dependencies": {
-    "Nito.ConnectedProperties": "4.0.0-delta-*",
+    "Nito.ConnectedProperties": "4.0.0-*",
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "ReportGenerator": "2.4.4",
