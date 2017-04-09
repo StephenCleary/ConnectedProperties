@@ -7,7 +7,7 @@ using Xunit;
 
 namespace UnitTests
 {
-    public class PropertyConnectorUnitTests
+    public class ConnectedPropertyScopeUnitTests
     {
         [Fact]
         public void TryGet_ForValueTypeCarrier_ReturnsNull()

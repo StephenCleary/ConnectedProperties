@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UnitTests
 {
-    public class ConnectedPropertiesUnitTests
+    public class ConnectedPropertyUnitTests
     {
         [Fact]
         public void TryConnect_WhenDisconnected_ReturnsTrueAndSetsValue()
