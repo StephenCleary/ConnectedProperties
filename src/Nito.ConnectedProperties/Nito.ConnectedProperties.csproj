@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Dynamically attached object properties.</Description>
+    <VersionPrefix>4.0.0-eta-01</VersionPrefix>
+    <Authors>Stephen Cleary</Authors>
+    <TargetFrameworks>netstandard1.1</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Nito.ConnectedProperties</AssemblyName>
+    <PackageId>Nito.ConnectedProperties</PackageId>
+    <PackageTags>dynamic;attached;connected;properties</PackageTags>
+    <PackageProjectUrl>https://github.com/StephenCleary/ConnectedProperties</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/ConnectedProperties/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StephenCleary/ConnectedProperties.git</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
