@@ -283,8 +283,8 @@ namespace UnitTests
             Assert.Equal(13, other.GetConnectedProperty(carrier, name).Get());
         }
 
-#if DEBUG // TODO: Is there some way we can force these to work in Debug? Anonymous method wrappers?
-#if !CI
+#if DEBUG || DEBUGCI // TODO: Is there some way we can force these to work in Debug? Anonymous method wrappers?
+#if !DEBUGCI
 #warning Skipping some unit tests due to DEBUG; build in Release to run all unit tests.
 #endif
 #else
