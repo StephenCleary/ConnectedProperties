@@ -21,23 +21,12 @@ namespace Nito.ConnectedProperties
         /// Gets the concurrent dictionary for the specified carrier object, creating it if necessary. No validation is done.
         /// </summary>
         /// <param name="carrier">The carrier object.</param>
-        private ConcurrentDictionary<string, object> GetPropertyStore(object carrier)
-        {
-            return _table.GetValue(carrier, _ => new ConcurrentDictionary<string, object>());
-        }
-
-        private static readonly ConnectedPropertyScope _default = new ConnectedPropertyScope();
+        private ConcurrentDictionary<string, object> GetPropertyStore(object carrier) => _table.GetValue(carrier, _ => new ConcurrentDictionary<string, object>());
 
         /// <summary>
         /// Gets the default collection of connected properties.
         /// </summary>
-        public static ConnectedPropertyScope Default
-        {
-            get
-            {
-                return _default;
-            }
-        }
+        public static ConnectedPropertyScope Default { get; } = new ConnectedPropertyScope();
 
         /// <summary>
         /// Gets a connected property with the specified name. Throws <see cref="InvalidOperationException"/> if <paramref name="carrier"/> is not a valid carrier object.
@@ -125,7 +114,7 @@ namespace Nito.ConnectedProperties
         private static bool TryVerify(object carrier)
         {
             var type = carrier.GetType();
-            return ValidCarrierTypes.GetOrAdd(type, t => IsReferenceEquatable(t));
+            return ValidCarrierTypes.GetOrAdd(type, IsReferenceEquatable);
         }
 
         /// <summary>
@@ -156,7 +145,7 @@ namespace Nito.ConnectedProperties
                     if (!method.IsPublic || method.IsStatic || !method.IsVirtual || !method.IsHideBySig || method.Name != "Equals")
                         continue;
                     var baseDefinition = method.GetRuntimeBaseDefinition();
-                    if (baseDefinition == method)
+                    if (baseDefinition.Equals(method))
                         continue;
                     if (baseDefinition.DeclaringType == typeof(object))
                         return true;
