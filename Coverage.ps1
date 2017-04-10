@@ -1,4 +1,4 @@
 $testProjectLocations = @('test/UnitTests')
 $outputLocation = 'testResults'
-$dotnetTestArgs = '-c Release'
-iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/StephenCleary/BuildTools/599beba35b53f495d4df6e5c323573aa839137a3/Coverage.ps1'))
+$dotnetTestArgs = '-configuration ReleaseCI'
+iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/StephenCleary/BuildTools/bbd8d76c4a486fbb7f30e9ceb23e29da0e7e4730/Coverage.ps1'))
