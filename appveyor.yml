@@ -7,8 +7,6 @@ environment:
 branches:
   only:
     - master
-install:
-- ps: nuget update -self
 build_script:
 - ps: ./Build.ps1
 test_script:
