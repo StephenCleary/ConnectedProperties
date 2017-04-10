@@ -36,9 +36,10 @@ namespace Nito.ConnectedProperties
         /// </summary>
         /// <param name="carrier">The carrier object for this property.</param>
         /// <param name="name">The name of the property.</param>
-        public static ConnectedProperty GetConnectedProperty(object carrier, string name)
+        /// <param name="bypassValidation">An optional value indicating whether to bypass carrier object validation. The default is <c>false</c>.</param>
+        public static ConnectedProperty GetConnectedProperty(object carrier, string name, bool bypassValidation = false)
         {
-            return ConnectedPropertyScope.Default.GetConnectedProperty(carrier, name);
+            return ConnectedPropertyScope.Default.GetConnectedProperty(carrier, name, bypassValidation);
         }
 
         /// <summary>
@@ -130,6 +131,14 @@ namespace Nito.ConnectedProperties
         }
 
         /// <summary>
+        /// Gets the value of the property. Throws <see cref="InvalidOperationException"/> if <paramref name="carrier"/> is not a valid carrier object or if the property specified by <paramref name="name"/> was disconnected.
+        /// </summary>
+        /// <param name="carrier">The carrier object for this property.</param>
+        /// <param name="name">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
+        public static dynamic Get(object carrier, string name) => GetConnectedProperty(carrier, name).Get();
+
+        /// <summary>
         /// Sets the value of the property, throwing an exception if the property was already connected.
         /// </summary>
         /// <param name="value">The value to set.</param>
@@ -167,5 +176,13 @@ namespace Nito.ConnectedProperties
         {
             CreateOrUpdate(() => value, _ => value);
         }
+
+        /// <summary>
+        /// Sets the value of the property, overwriting any existing value. Throws <see cref="InvalidOperationException"/> if <paramref name="carrier"/> is not a valid carrier object.
+        /// </summary>
+        /// <param name="carrier">The carrier object for this property.</param>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set.</param>
+        public static void Set(object carrier, string name, object value) => GetConnectedProperty(carrier, name).Set(value);
     }
 }

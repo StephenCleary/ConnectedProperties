@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using static Nito.ConnectedProperties.ConnectedProperty;
+using Nito.ConnectedProperties;
 
 namespace UnitTests
 {
@@ -13,16 +13,11 @@ namespace UnitTests
         {
             var obj = new object();
 
-            var nameProperty = GetConnectedProperty(obj, "Name");
-            nameProperty.Set("Bob");
+            ConnectedProperty.Set(obj, "Name", "Bob");
 
             Assert.Equal("Bob", ReadName(obj));
         }
 
-        private static string ReadName(object obj)
-        {
-            var nameProperty = GetConnectedProperty(obj, "Name");
-            return nameProperty.Get();
-        }
+        private static string ReadName(object obj) => ConnectedProperty.Get(obj, "Name");
     }
 }
