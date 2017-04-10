@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Dynamically attached object properties.</Description>
-    <VersionPrefix>4.0.0-eta-01</VersionPrefix>
+    <VersionPrefix>4.0.0-eta-02</VersionPrefix>
     <Authors>Stephen Cleary</Authors>
     <TargetFrameworks>netstandard1.1</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
