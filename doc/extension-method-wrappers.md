@@ -1,7 +1,8 @@
 The syntax for directly using connected properties is a bit awkward. One way to make it less awkward for end-users is to wrap connected property access into extension methods, as such:
 
 ````C#
-// Represents a piece of data that has been read out of a file. We want to connect a property containing the source line number.
+// Represents a piece of data that has been read out of a file.
+// We want to connect a property containing the source line number.
 public class Token { .. }
 
 // Allow access to the connected property via extension methods.
