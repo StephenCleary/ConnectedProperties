@@ -48,8 +48,8 @@ namespace UnitTests
         {
             var carrier = 13;
             var name = Guid.NewGuid().ToString("N");
-            var connector = ConnectedPropertyScope.Default;
-            Assert.Throws<InvalidOperationException>(() => connector.GetConnectedProperty(carrier, name));
+            var scope = ConnectedPropertyScope.Default;
+            Assert.Throws<InvalidOperationException>(() => scope.GetConnectedProperty(carrier, name));
         }
 
         [Fact]
@@ -57,8 +57,8 @@ namespace UnitTests
         {
             var carrier = "Hi";
             var name = Guid.NewGuid().ToString("N");
-            var connector = ConnectedPropertyScope.Default;
-            Assert.Throws<InvalidOperationException>(() => connector.GetConnectedProperty(carrier, name));
+            var scope = ConnectedPropertyScope.Default;
+            Assert.Throws<InvalidOperationException>(() => scope.GetConnectedProperty(carrier, name));
         }
 
         [Fact]
@@ -84,8 +84,8 @@ namespace UnitTests
         {
             var carrier1 = 13;
             var carrier2 = new object();
-            var connector = ConnectedPropertyScope.Default;
-            Assert.Throws<InvalidOperationException>(() => connector.CopyAll(carrier1, carrier2));
+            var scope = ConnectedPropertyScope.Default;
+            Assert.Throws<InvalidOperationException>(() => scope.CopyAll(carrier1, carrier2));
         }
 
         [Fact]
@@ -93,8 +93,8 @@ namespace UnitTests
         {
             var carrier1 = new object();
             var carrier2 = 13;
-            var connector = ConnectedPropertyScope.Default;
-            Assert.Throws<InvalidOperationException>(() => connector.CopyAll(carrier1, carrier2));
+            var scope = ConnectedPropertyScope.Default;
+            Assert.Throws<InvalidOperationException>(() => scope.CopyAll(carrier1, carrier2));
         }
 
         [Fact]

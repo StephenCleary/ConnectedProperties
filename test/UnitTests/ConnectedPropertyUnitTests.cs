@@ -272,7 +272,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void Properties_WithSameNameButDifferentConnectors_HaveIndependentValues()
+        public void Properties_WithSameNameButDifferentScopes_HaveIndependentValues()
         {
             var carrier = new object();
             var name = Guid.NewGuid().ToString("N");
@@ -375,7 +375,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void Properties_CrossReferencingCarriersAcrossConnectors_WhenCarriersAreCollected_AreCollected()
+        public void Properties_CrossReferencingCarriersAcrossScopes_WhenCarriersAreCollected_AreCollected()
         {
             var name = Guid.NewGuid().ToString("N");
             var other = new ConnectedPropertyScope();
@@ -397,7 +397,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void Properties_CrossReferencingCarriersAcrossConnectors_WhenOnePropertyRemainsAlive_AreNotCollected()
+        public void Properties_CrossReferencingCarriersAcrossScopes_WhenOnePropertyRemainsAlive_AreNotCollected()
         {
             var name = Guid.NewGuid().ToString("N");
             var other = new ConnectedPropertyScope();
@@ -420,14 +420,14 @@ namespace UnitTests
         }
 
         [Fact]
-        public void Property_WhenConnectorIsCollected_IsCollected()
+        public void Property_WhenScopeIsCollected_IsCollected()
         {
             var name = Guid.NewGuid().ToString("N");
-            var connector = new ConnectedPropertyScope();
+            var scope = new ConnectedPropertyScope();
             var carrier = new object();
             var value = new object();
             var valueRef = new WeakReference(value);
-            connector.GetConnectedProperty(carrier, name).Set(value);
+            scope.GetConnectedProperty(carrier, name).Set(value);
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
@@ -436,27 +436,27 @@ namespace UnitTests
         }
 
         [Fact]
-        public void Property_ReferencingConnector_ActsAsStrongReference()
+        public void Property_ReferencingScope_ActsAsStrongReference()
         {
             var name = Guid.NewGuid().ToString("N");
-            var connector = new ConnectedPropertyScope();
-            var connectorRef = new WeakReference(connector);
+            var scope = new ConnectedPropertyScope();
+            var scopeRef = new WeakReference(scope);
             var carrier = new object();
-            Func<int> value = connector.GetHashCode;
+            Func<int> value = scope.GetHashCode;
             var valueRef = new WeakReference(value);
-            connector.GetConnectedProperty(carrier, name).Set(value);
+            scope.GetConnectedProperty(carrier, name).Set(value);
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
             Assert.True(valueRef.IsAlive);
-            Assert.True(connectorRef.IsAlive);
+            Assert.True(scopeRef.IsAlive);
             GC.KeepAlive(carrier);
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
             Assert.False(valueRef.IsAlive);
-            Assert.False(connectorRef.IsAlive);
+            Assert.False(scopeRef.IsAlive);
         }
 #endif
     }
