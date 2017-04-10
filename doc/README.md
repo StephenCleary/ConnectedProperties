@@ -32,5 +32,4 @@ Techniques
 Details
 - [AppDomains](app-domains.md)
 - [Notes on Naming](notes-on-naming.md)
-- [Library Compatibility](library-compatibility.md)
 - [How It Works](how-it-works.md)
