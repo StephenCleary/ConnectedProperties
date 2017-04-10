@@ -10,9 +10,11 @@ public static class TokenExtensions
 {
   private const string SourceLineNumber = Guid.NewGuid().ToString("N");
 
-  public static int GetSourceLineNumber(Token token) => ConnectedProperty.Get(token, SourceLineNumber);
+  public static int GetSourceLineNumber(this Token token) =>
+      ConnectedProperty.Get(token, SourceLineNumber);
 
-  public static void SetSourceLineNumber(Token token, int lineNumber) => ConnectedProperty.Set(token, SourceLineNumber, lineNumber);
+  public static void SetSourceLineNumber(this Token token, int lineNumber) =>
+      ConnectedProperty.Set(token, SourceLineNumber, lineNumber);
 }
 ````
 
