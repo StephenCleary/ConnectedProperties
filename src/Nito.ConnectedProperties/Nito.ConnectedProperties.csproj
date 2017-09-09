@@ -15,9 +15,6 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/ConnectedProperties/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StephenCleary/ConnectedProperties.git</RepositoryUrl>
-    <PublicSign>True</PublicSign>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugCI|AnyCPU'">
