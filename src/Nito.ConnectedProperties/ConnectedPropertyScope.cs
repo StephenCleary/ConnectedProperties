@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Nito.ConnectedProperties
 {
@@ -36,9 +35,12 @@ namespace Nito.ConnectedProperties
         /// <param name="bypassValidation">An optional value indicating whether to bypass carrier object validation. The default is <c>false</c>.</param>
         public ConnectedProperty GetConnectedProperty(object carrier, string name, bool bypassValidation = false)
         {
-            if (!bypassValidation && !TryVerify(carrier))
+            _ = carrier ?? throw new ArgumentNullException(nameof(carrier));
+            _ = name ?? throw new ArgumentNullException(nameof(name));
+            var result = TryGetConnectedProperty(carrier, name, bypassValidation);
+            if (result == null)
                 throw ValidationException(carrier);
-            return TryGetConnectedProperty(carrier, name, bypassValidation: true);
+            return result;
         }
 
         /// <summary>
@@ -47,8 +49,10 @@ namespace Nito.ConnectedProperties
         /// <param name="carrier">The carrier object for this property.</param>
         /// <param name="name">The name of the property.</param>
         /// <param name="bypassValidation">An optional value indicating whether to bypass carrier object validation. The default is <c>false</c>.</param>
-        public ConnectedProperty TryGetConnectedProperty(object carrier, string name, bool bypassValidation = false)
+        public ConnectedProperty? TryGetConnectedProperty(object carrier, string name, bool bypassValidation = false)
         {
+            _ = carrier ?? throw new ArgumentNullException(nameof(carrier));
+            _ = name ?? throw new ArgumentNullException(nameof(name));
             if (!bypassValidation && !TryVerify(carrier))
                 return null;
             var dictionary = GetPropertyStore(carrier);
@@ -63,6 +67,8 @@ namespace Nito.ConnectedProperties
         /// <param name="bypassValidation">An optional value indicating whether to bypass carrier object validation. The default is <c>false</c>.</param>
         public void CopyAll(object fromCarrier, object toCarrier, bool bypassValidation = false)
         {
+            _ = fromCarrier ?? throw new ArgumentNullException(nameof(fromCarrier));
+            _ = toCarrier ?? throw new ArgumentNullException(nameof(toCarrier));
             if (!bypassValidation)
             {
                 if (!TryVerify(fromCarrier))
@@ -81,6 +87,8 @@ namespace Nito.ConnectedProperties
         /// <param name="bypassValidation">An optional value indicating whether to bypass carrier object validation. The default is <c>false</c>.</param>
         public bool TryCopyAll(object fromCarrier, object toCarrier, bool bypassValidation = false)
         {
+            _ = fromCarrier ?? throw new ArgumentNullException(nameof(fromCarrier));
+            _ = toCarrier ?? throw new ArgumentNullException(nameof(toCarrier));
             if (!bypassValidation && (!TryVerify(fromCarrier) || !TryVerify(toCarrier)))
                 return false;
             var properties = GetPropertyStore(fromCarrier);
@@ -98,7 +106,7 @@ namespace Nito.ConnectedProperties
         /// <param name="carrier">The carrier object.</param>
         private static Exception ValidationException(object carrier)
         {
-            return new InvalidOperationException("Object of type \"" + carrier.GetType() + "\" may not have connected properties. Only reference types that use reference equality may have connected properties.");
+            return new InvalidOperationException($"Object of type \"{carrier.GetType()}\" may not have connected properties. Only reference types that use reference equality may have connected properties.");
         }
 
         /// <summary>

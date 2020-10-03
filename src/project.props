@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <VersionPrefix>4.0.2</VersionPrefix>
+    <Authors>Stephen Cleary</Authors>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+</Project>

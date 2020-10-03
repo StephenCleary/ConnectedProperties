@@ -1,10 +1,8 @@
-# ConnectedProperties [![AppVeyor](https://img.shields.io/appveyor/ci/StephenCleary/ConnectedProperties.svg?style=plastic)](https://ci.appveyor.com/project/StephenCleary/ConnectedProperties) [![Coveralls](https://img.shields.io/coveralls/StephenCleary/ConnectedProperties.svg?style=plastic)](https://coveralls.io/r/StephenCleary/ConnectedProperties)
+![Logo](src/icon.png)
+
+# ConnectedProperties [![Build status](https://github.com/StephenCleary/ConnectedProperties/workflows/Build/badge.svg)](https://github.com/StephenCleary/ConnectedProperties/actions?query=workflow%3ABuild) [![codecov](https://codecov.io/gh/StephenCleary/ConnectedProperties/branch/master/graph/badge.svg)](https://codecov.io/gh/StephenCleary/ConnectedProperties) [![NuGet version](https://badge.fury.io/nu/Nito.ConnectedProperties.svg)](https://www.nuget.org/packages/Nito.ConnectedProperties) [![API docs](https://img.shields.io/badge/API-dotnetapis-blue.svg)](http://dotnetapis.com/pkg/Nito.ConnectedProperties)
 
 Dynamically attach properties to (almost) any object instance.
-
-[API Docs](http://dotnetapis.com/pkg/Nito.ConnectedProperties)
-
-[![NuGet Pre Release](https://img.shields.io/nuget/vpre/Nito.ConnectedProperties.svg?style=plastic)](https://www.nuget.org/packages/Nito.ConnectedProperties/)
 
 ## The 2-Minute Intro: Connecting a "Name" to (almost) any Object
 

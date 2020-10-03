@@ -50,7 +50,7 @@ namespace Nito.ConnectedProperties
         /// <summary>
         /// Attempts to disconnect the property. Returns <c>true</c> if the property was disconnected by this method; <c>false</c> if the property was already disconnected.
         /// </summary>
-        public bool TryDisconnect() => _dictionary.TryRemove(_key, out object junk);
+        public bool TryDisconnect() => _dictionary.TryRemove(_key, out _);
 
         /// <summary>
         /// Gets the value of the property, if it is connected. Returns <c>true</c> if the property was returned in <paramref name="value"/>; <c>false</c> if the property was disconnected.

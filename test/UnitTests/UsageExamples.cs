@@ -6,7 +6,7 @@ using Nito.ConnectedProperties;
 
 namespace UnitTests
 {
-    class UsageExamples
+    public class UsageExamples
     {
         [Fact]
         public void SimpleUsage()

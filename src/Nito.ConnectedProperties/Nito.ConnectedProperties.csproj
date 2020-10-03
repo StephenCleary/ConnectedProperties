@@ -2,24 +2,8 @@
 
   <PropertyGroup>
     <Description>Dynamically attached object properties.</Description>
-    <VersionPrefix>4.0.2</VersionPrefix>
-    <VersionSuffix></VersionSuffix>
-    <Authors>Stephen Cleary</Authors>
-    <TargetFrameworks>netstandard1.1;netstandard2.0</TargetFrameworks>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyName>Nito.ConnectedProperties</AssemblyName>
-    <PackageId>Nito.ConnectedProperties</PackageId>
     <PackageTags>dynamic;attached;connected;properties</PackageTags>
-    <PackageProjectUrl>https://github.com/StephenCleary/ConnectedProperties</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/ConnectedProperties/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/StephenCleary/ConnectedProperties.git</RepositoryUrl>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugCI|AnyCPU'">
-    <DebugType>full</DebugType>
-    <DebugSymbols>True</DebugSymbols>
+    <TargetFrameworks>netstandard1.1;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">

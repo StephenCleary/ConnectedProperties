@@ -283,180 +283,239 @@ namespace UnitTests
             Assert.Equal(13, other.GetConnectedProperty(carrier, name).Get());
         }
 
-#if DEBUG || DEBUGCI // TODO: Is there some way we can force these to work in Debug? Anonymous method wrappers?
-#if !DEBUGCI
+#if DEBUG
 #warning Skipping some unit tests due to DEBUG; build in Release to run all unit tests.
-#endif
 #else
         [Fact]
         public void Property_WhenCarrierIsAlive_IsNotCollected()
         {
             // A "dictionary mapping" with weak value references will not pass this test.
-            var name = Guid.NewGuid().ToString("N");
-            var carrier = new object();
-            var value = new object();
-            var valueRef = new WeakReference(value);
-            ConnectedProperty.GetConnectedProperty(carrier, name).Set(value);
+            var (carrier, valueRef) = Create();
             GC.Collect();
             Assert.True(valueRef.IsAlive);
             GC.KeepAlive(carrier);
+
+            (object, WeakReference) Create()
+            {
+                var name = Guid.NewGuid().ToString("N");
+                var carrier = new object();
+                var value = new object();
+                var valueRef = new WeakReference(value);
+                ConnectedProperty.GetConnectedProperty(carrier, name).Set(value);
+                return (carrier, valueRef);
+            }
         }
 
         [Fact]
         public void Property_WhenCarrierIsCollected_IsCollected()
         {
-            var name = Guid.NewGuid().ToString("N");
-            var carrier = new object();
-            var carrierRef = new WeakReference(carrier);
-            var value = new object();
-            var valueRef = new WeakReference(value);
-            ConnectedProperty.GetConnectedProperty(carrier, name).Set(value);
+            var (carrierRef, valueRef) = Create();
             GC.Collect();
             Assert.False(carrierRef.IsAlive);
             Assert.False(valueRef.IsAlive);
+
+            (WeakReference, WeakReference) Create()
+            {
+                var name = Guid.NewGuid().ToString("N");
+                var carrier = new object();
+                var carrierRef = new WeakReference(carrier);
+                var value = new object();
+                var valueRef = new WeakReference(value);
+                ConnectedProperty.GetConnectedProperty(carrier, name).Set(value);
+                return (carrierRef, valueRef);
+            }
         }
 
         [Fact]
         public void Property_ReferencingCarrier_WhenCarrierIsCollected_IsCollected()
         {
             // A "dictionary mapping" with strong value references will not pass this test.
-            var name = Guid.NewGuid().ToString("N");
-            var carrier = new object();
-            var carrierRef = new WeakReference(carrier);
-            Func<int> value = carrier.GetHashCode;
-            var valueRef = new WeakReference(value);
-            ConnectedProperty.GetConnectedProperty(carrier, name).Set(value);
+            var (carrierRef, valueRef) = Create();
             GC.Collect();
             Assert.False(carrierRef.IsAlive);
             Assert.False(valueRef.IsAlive);
+
+            (WeakReference, WeakReference) Create()
+            {
+                var name = Guid.NewGuid().ToString("N");
+                var carrier = new object();
+                var carrierRef = new WeakReference(carrier);
+                Func<int> value = carrier.GetHashCode;
+                var valueRef = new WeakReference(value);
+                ConnectedProperty.GetConnectedProperty(carrier, name).Set(value);
+                return (carrierRef, valueRef);
+            }
         }
-        
+
         [Fact]
         public void Properties_CrossReferencingCarriers_WhenCarriersAreCollected_AreCollected()
         {
-            var name = Guid.NewGuid().ToString("N");
-            var carrier1 = new object();
-            var carrierRef1 = new WeakReference(carrier1);
-            var carrier2 = new object();
-            var carrierRef2 = new WeakReference(carrier1);
-            Func<int> value1 = carrier2.GetHashCode;
-            var valueRef1 = new WeakReference(value1);
-            Func<int> value2 = carrier1.GetHashCode;
-            var valueRef2 = new WeakReference(value2);
-            ConnectedProperty.GetConnectedProperty(carrier1, name).Set(value1);
-            ConnectedProperty.GetConnectedProperty(carrier2, name).Set(value2);
+            var (carrierRef1, valueRef1, carrierRef2, valueRef2) = Create();
             GC.Collect();
             Assert.False(carrierRef1.IsAlive);
             Assert.False(valueRef1.IsAlive);
             Assert.False(carrierRef2.IsAlive);
             Assert.False(valueRef2.IsAlive);
+
+            (WeakReference, WeakReference, WeakReference, WeakReference) Create()
+            {
+                var name = Guid.NewGuid().ToString("N");
+                var carrier1 = new object();
+                var carrierRef1 = new WeakReference(carrier1);
+                var carrier2 = new object();
+                var carrierRef2 = new WeakReference(carrier1);
+                Func<int> value1 = carrier2.GetHashCode;
+                var valueRef1 = new WeakReference(value1);
+                Func<int> value2 = carrier1.GetHashCode;
+                var valueRef2 = new WeakReference(value2);
+                ConnectedProperty.GetConnectedProperty(carrier1, name).Set(value1);
+                ConnectedProperty.GetConnectedProperty(carrier2, name).Set(value2);
+                return (carrierRef1, valueRef1, carrierRef2, valueRef2);
+            }
         }
 
         [Fact]
         public void Properties_CrossReferencingCarriers_WhenOnePropertyRemainsAlive_AreNotCollected()
         {
-            var name = Guid.NewGuid().ToString("N");
-            var carrier1 = new object();
-            var carrierRef1 = new WeakReference(carrier1);
-            var carrier2 = new object();
-            var carrierRef2 = new WeakReference(carrier1);
-            Func<int> value1 = carrier2.GetHashCode;
-            var valueRef1 = new WeakReference(value1);
-            Func<int> value2 = carrier1.GetHashCode;
-            var valueRef2 = new WeakReference(value2);
-            ConnectedProperty.GetConnectedProperty(carrier1, name).Set(value1);
-            ConnectedProperty.GetConnectedProperty(carrier2, name).Set(value2);
+            var (carrierRef1, valueRef1, carrierRef2, valueRef2, value1) = Create();
             GC.Collect();
             Assert.True(carrierRef1.IsAlive);
             Assert.True(valueRef1.IsAlive);
             Assert.True(carrierRef2.IsAlive);
             Assert.True(valueRef2.IsAlive);
             GC.KeepAlive(value1);
+
+            (WeakReference, WeakReference, WeakReference, WeakReference, Func<int>) Create()
+            {
+                var name = Guid.NewGuid().ToString("N");
+                var carrier1 = new object();
+                var carrierRef1 = new WeakReference(carrier1);
+                var carrier2 = new object();
+                var carrierRef2 = new WeakReference(carrier1);
+                Func<int> value1 = carrier2.GetHashCode;
+                var valueRef1 = new WeakReference(value1);
+                Func<int> value2 = carrier1.GetHashCode;
+                var valueRef2 = new WeakReference(value2);
+                ConnectedProperty.GetConnectedProperty(carrier1, name).Set(value1);
+                ConnectedProperty.GetConnectedProperty(carrier2, name).Set(value2);
+                return (carrierRef1, valueRef1, carrierRef2, valueRef2, value1);
+            }
         }
 
         [Fact]
         public void Properties_CrossReferencingCarriersAcrossScopes_WhenCarriersAreCollected_AreCollected()
         {
-            var name = Guid.NewGuid().ToString("N");
-            var other = new ConnectedPropertyScope();
-            var carrier1 = new object();
-            var carrierRef1 = new WeakReference(carrier1);
-            var carrier2 = new object();
-            var carrierRef2 = new WeakReference(carrier1);
-            Func<int> value1 = carrier2.GetHashCode;
-            var valueRef1 = new WeakReference(value1);
-            Func<int> value2 = carrier1.GetHashCode;
-            var valueRef2 = new WeakReference(value2);
-            ConnectedProperty.GetConnectedProperty(carrier1, name).Set(value1);
-            other.GetConnectedProperty(carrier2, name).Set(value2);
+            var (carrierRef1, valueRef1, carrierRef2, valueRef2) = Create();
             GC.Collect();
             Assert.False(carrierRef1.IsAlive);
             Assert.False(valueRef1.IsAlive);
             Assert.False(carrierRef2.IsAlive);
             Assert.False(valueRef2.IsAlive);
+
+            (WeakReference, WeakReference, WeakReference, WeakReference) Create()
+            {
+                var name = Guid.NewGuid().ToString("N");
+                var other = new ConnectedPropertyScope();
+                var carrier1 = new object();
+                var carrierRef1 = new WeakReference(carrier1);
+                var carrier2 = new object();
+                var carrierRef2 = new WeakReference(carrier1);
+                Func<int> value1 = carrier2.GetHashCode;
+                var valueRef1 = new WeakReference(value1);
+                Func<int> value2 = carrier1.GetHashCode;
+                var valueRef2 = new WeakReference(value2);
+                ConnectedProperty.GetConnectedProperty(carrier1, name).Set(value1);
+                other.GetConnectedProperty(carrier2, name).Set(value2);
+                return (carrierRef1, valueRef1, carrierRef2, valueRef2);
+            }
         }
 
         [Fact]
         public void Properties_CrossReferencingCarriersAcrossScopes_WhenOnePropertyRemainsAlive_AreNotCollected()
         {
-            var name = Guid.NewGuid().ToString("N");
-            var other = new ConnectedPropertyScope();
-            var carrier1 = new object();
-            var carrierRef1 = new WeakReference(carrier1);
-            var carrier2 = new object();
-            var carrierRef2 = new WeakReference(carrier1);
-            Func<int> value1 = carrier2.GetHashCode;
-            var valueRef1 = new WeakReference(value1);
-            Func<int> value2 = carrier1.GetHashCode;
-            var valueRef2 = new WeakReference(value2);
-            ConnectedProperty.GetConnectedProperty(carrier1, name).Set(value1);
-            other.GetConnectedProperty(carrier2, name).Set(value2);
+            var (carrierRef1, valueRef1, carrierRef2, valueRef2, value1) = Create();
             GC.Collect();
             Assert.True(carrierRef1.IsAlive);
             Assert.True(valueRef1.IsAlive);
             Assert.True(carrierRef2.IsAlive);
             Assert.True(valueRef2.IsAlive);
             GC.KeepAlive(value1);
+
+            (WeakReference, WeakReference, WeakReference, WeakReference, Func<int>) Create()
+            {
+                var name = Guid.NewGuid().ToString("N");
+                var other = new ConnectedPropertyScope();
+                var carrier1 = new object();
+                var carrierRef1 = new WeakReference(carrier1);
+                var carrier2 = new object();
+                var carrierRef2 = new WeakReference(carrier1);
+                Func<int> value1 = carrier2.GetHashCode;
+                var valueRef1 = new WeakReference(value1);
+                Func<int> value2 = carrier1.GetHashCode;
+                var valueRef2 = new WeakReference(value2);
+                ConnectedProperty.GetConnectedProperty(carrier1, name).Set(value1);
+                other.GetConnectedProperty(carrier2, name).Set(value2);
+                return (carrierRef1, valueRef1, carrierRef2, valueRef2, value1);
+            }
         }
 
         [Fact]
         public void Property_WhenScopeIsCollected_IsCollected()
         {
-            var name = Guid.NewGuid().ToString("N");
-            var scope = new ConnectedPropertyScope();
-            var carrier = new object();
-            var value = new object();
-            var valueRef = new WeakReference(value);
-            scope.GetConnectedProperty(carrier, name).Set(value);
+            var (valueRef, carrier) = Create();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
             Assert.False(valueRef.IsAlive);
             GC.KeepAlive(carrier);
+
+            (WeakReference, object) Create()
+            {
+                var name = Guid.NewGuid().ToString("N");
+                var scope = new ConnectedPropertyScope();
+                var carrier = new object();
+                var value = new object();
+                var valueRef = new WeakReference(value);
+                scope.GetConnectedProperty(carrier, name).Set(value);
+                return (valueRef, carrier);
+            }
         }
 
         [Fact]
         public void Property_ReferencingScope_ActsAsStrongReference()
         {
-            var name = Guid.NewGuid().ToString("N");
-            var scope = new ConnectedPropertyScope();
-            var scopeRef = new WeakReference(scope);
-            var carrier = new object();
-            Func<int> value = scope.GetHashCode;
-            var valueRef = new WeakReference(value);
-            scope.GetConnectedProperty(carrier, name).Set(value);
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
-            Assert.True(valueRef.IsAlive);
-            Assert.True(scopeRef.IsAlive);
-            GC.KeepAlive(carrier);
-
+            var (valueRef, scopeRef) = Part1();
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
             Assert.False(valueRef.IsAlive);
             Assert.False(scopeRef.IsAlive);
+
+            (WeakReference, WeakReference, object) Create()
+            {
+                var name = Guid.NewGuid().ToString("N");
+                var scope = new ConnectedPropertyScope();
+                var scopeRef = new WeakReference(scope);
+                var carrier = new object();
+                Func<int> value = scope.GetHashCode;
+                var valueRef = new WeakReference(value);
+                scope.GetConnectedProperty(carrier, name).Set(value);
+                return (valueRef, scopeRef, carrier);
+            }
+
+            (WeakReference, WeakReference) Part1()
+            {
+                var (valueRef, scopeRef, carrier) = Create();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                Assert.True(valueRef.IsAlive);
+                Assert.True(scopeRef.IsAlive);
+                GC.KeepAlive(carrier);
+                return (valueRef, scopeRef);
+            }
         }
 #endif
     }
